@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    fnm - Distribution for FNM
+    Copyright © 2024 https://github.com/Schniz
+    Copyright © 2024 hazendaz
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.hazendaz</groupId>
+        <artifactId>base-parent</artifactId>
+        <version>50</version>
+        <relativePath />
+    </parent>
+
+    <groupId>com.github.hazendaz.fnm</groupId>
+    <artifactId>fnm</artifactId>
+    <version>1.38.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>fnm</name>
+    <description>Distribution for FNM</description>
+    <url>https://hazendaz.github.io/fnm/</url>
+    <inceptionYear>2024</inceptionYear>
+    <licenses>
+        <license>
+            <name>GPL-v3.0</name>
+            <url>https://github.com/Schniz/fnm/blob/master/LICENSE</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:ssh://git@github.com/hazendaz/fnm.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/hazendaz/fnm.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/hazendaz/fnm</url>
+    </scm>
+    <distributionManagement>
+        <site>
+            <id>gh-pages-scm</id>
+            <name>FNM Distribution Wrapper GitHub Pages</name>
+            <url>scm:git:ssh://git@github.com/hazendaz/fnm.git</url>
+        </site>
+    </distributionManagement>
+
+    <properties>
+        <fnm.version>1.38.1</fnm.version>
+        <download-plugin.version>1.11.2</download-plugin.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <!-- Download -->
+            <plugin>
+                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <artifactId>download-maven-plugin</artifactId>
+                <version>${download-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>fnm-linux-gz</id>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>https://github.com/Schniz/fnm/releases/download/v${fnm.version}/fnm-linux.zip</url>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>fnm-windows-zip</id>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>https://github.com/Schniz/fnm/releases/download/v${fnm.version}/fnm-windows.zip</url>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Attach Artifact -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>${project.build.directory}/fnm-linux.zip</file>
+                                    <classifier>linux</classifier>
+                                    <type>zip</type>
+                                </artifact>
+                                <artifact>
+                                    <file>${project.build.directory}/fnm-windows.zip</file>
+                                    <classifier>windows</classifier>
+                                    <type>zip</type>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

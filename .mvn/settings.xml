@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    fnm - Distribution for FNM
+    Copyright © 2024 https://github.com/Schniz
+    Copyright © 2024 hazendaz
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<settings xmlns="http://maven.apache.org/SETTINGS/1.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd">
+
+  <servers>
+    <!-- Used for sonatype snapshots and releases -->
+    <server>
+      <id>ossrh</id>
+      <username>${env.CI_DEPLOY_USERNAME}</username>
+      <password>${env.CI_DEPLOY_PASSWORD}</password>
+    </server>
+
+    <!-- Used for gh-pages-scm publish via maven-scm-publish-plugin -->
+    <server>
+      <id>gh-pages-scm</id>
+      <configuration>
+        <scmVersionType>branch</scmVersionType>
+        <scmVersion>gh-pages</scmVersion>
+      </configuration>
+    </server>
+
+    <!-- Github deployments (site) -->
+    <server>
+      <id>github</id>
+      <username>${env.CI_DEPLOY_USERNAME}</username>
+      <password>${env.GITHUB_TOKEN}</password>
+    </server>
+
+    <!-- NVD API Access (dependency-check-plugin) -->
+    <server>
+      <id>nvd</id>
+      <password>${env.NVD_API_KEY}</password>
+    </server>
+  </servers>
+
+</settings>
