@@ -62,7 +62,7 @@
 
     <properties>
         <fnm.version>1.39.0</fnm.version>
-        <download-plugin.version>2.1.0</download-plugin.version>
+        <download-plugin.version>2.2.0</download-plugin.version>
     </properties>
 
     <build>
